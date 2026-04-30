@@ -87,6 +87,59 @@ input{
 
 .footer{display:flex;justify-content:center;padding:20px 0 0}
 
+/* Vote boards (merged from style.css2) */
+.vote-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:10px;
+}
+
+.vote-item{
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:12px;
+  background: rgba(0,0,0,.18);
+}
+
+.vote-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.vote-title{
+  font-weight:800;
+}
+
+.vote-bar{
+  height:10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  overflow:hidden;
+  margin-top:10px;
+}
+
+.vote-bar > div{
+  height:100%;
+  width:0%;
+  background: linear-gradient(90deg, rgba(106,166,255,.75), rgba(139,255,207,.65));
+}
+
+/* Hero image (merged from style.css3) */
+.hero-img{
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  margin-bottom: 14px;
+  filter: saturate(1.05) contrast(1.05);
+}
+
 @media (max-width: 860px){
   .grid{grid-template-columns:1fr}
   .two-col{grid-template-columns:1fr}

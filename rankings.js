@@ -1,4 +1,5 @@
-const $ = (sel) => document.querySelector(sel);
+/* global $ */
+if (typeof $ === 'undefined') var $ = (sel) => document.querySelector(sel);
 
 // Generic vote board factory
 function createVoteBoard({
