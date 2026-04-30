@@ -15,22 +15,22 @@
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
         <a href="#tools">Interactive</a>
+        <a href="#games">Fun Games</a>
+        <a href="#rankings">Rankings</a>
+        <a href="./xpulse.html">X-Pulse</a>
         <a href="#contact">Contact</a>
       </div>
     </nav>
 
     <section class="hero">
-      <h1>Hi, I’m Justin.</h1>
-      <p>
-        Welcome to my GitHub Pages site. It includes an interactive tool (goal tracker + focus timer)
-        to prove it’s not just static.
-      </p>
+      <img class="hero-img" src="./wallpaers.avif" alt="background" />
+      <h1>Hi, I'm Justin.</h1>
+      <p>Welcome to my personal site.</p>
 
       <div class="hero-actions">
         <a class="button" href="#tools">Try the Interactive Tool</a>
-        <a class="button secondary" href="./Justin%20Stone%20Resume%202026%20(Current).pdf" target="_blank" rel="noreferrer">
-          View Resume (PDF)
-        </a>
+        <a class="button secondary" href="#games">Play Mini-Games</a>
+        <a class="button secondary" href="./Justin%20Stone%20Resume%202026%20(Current).pdf" target="_blank" rel="noreferrer">View Resume (PDF)</a>
       </div>
 
       <p class="micro" id="todayLine"></p>
@@ -40,10 +40,7 @@
   <main class="container">
     <section id="about" class="card">
       <h2>About</h2>
-      <p>
-        I’m building skills by shipping real projects. This site is deployed on GitHub Pages and includes
-        interactive features built with HTML/CSS/JS.
-      </p>
+      <p>I'm building my portfolio with real projects deployed on GitHub Pages.</p>
       <ul class="bullets">
         <li><strong>Strengths:</strong> learning fast, shipping, iteration</li>
         <li><strong>Interests:</strong> tech, building useful tools, automation</li>
@@ -54,24 +51,18 @@
     <section id="projects" class="card">
       <h2>Projects</h2>
       <div class="grid">
-        <article class="project">
-          <h3>Interactive Goal Tracker</h3>
-          <p>Add goals, mark done, and track progress. Saved in your browser.</p>
-        </article>
-        <article class="project">
-          <h3>Focus Timer</h3>
-          <p>Simple Pomodoro-style timer with start/pause/reset.</p>
-        </article>
-        <article class="project">
-          <h3>Resume Link</h3>
-          <p>One-click resume access (PDF) from the hero section.</p>
-        </article>
+        <article class="project"><h3>Goal Tracker</h3><p>Add goals, mark done, and track progress. Saved in your browser.</p><a href="#tools">Try it</a></article>
+        <article class="project"><h3>Focus Timer</h3><p>Pomodoro-style countdown timer with start/pause/reset.</p><a href="#tools">Try it</a></article>
+        <article class="project"><h3>Beer Rankings</h3><p>Vote on your favorite beers. Results auto-sort and persist.</p><a href="#rankings">Try it</a></article>
+        <article class="project"><h3>Sports Vote</h3><p>Pick the best sport and watch the live ranking change.</p><a href="#rankings">Try it</a></article>
+        <article class="project"><h3>Reaction Time Game</h3><p>Test how fast your reflexes are with a click-to-react challenge.</p><a href="#games">Try it</a></article>
+        <article class="project"><h3>Number Guessing Game</h3><p>Guess a secret number 1-100 with high/low feedback.</p><a href="#games">Try it</a></article>
+        <article class="project"><h3>X-Pulse Tracker</h3><p>Top 5 conspiracy theories trending on X - April 2026 edition.</p><a href="./xpulse.html">View</a></article>
       </div>
     </section>
 
     <section id="tools" class="card">
       <h2>Interactive: Goals + Focus Timer</h2>
-
       <div class="two-col">
         <div>
           <h3>Goal Tracker</h3>
@@ -79,15 +70,12 @@
             <input id="goalInput" type="text" placeholder="Add a goal (e.g., Apply to 3 internships)" maxlength="80" required />
             <button class="button" type="submit">Add</button>
           </form>
-
           <div class="row between">
             <div class="micro" id="progressText">0% complete</div>
             <button class="button secondary small" id="clearGoalsBtn" type="button">Clear</button>
           </div>
-
           <ul id="goalList" class="list"></ul>
         </div>
-
         <div>
           <h3>Focus Timer</h3>
           <div class="timer">
@@ -97,10 +85,7 @@
               <button class="button secondary" id="resetBtn" type="button">Reset</button>
             </div>
             <div class="row">
-              <label class="micro">
-                Minutes:
-                <input id="minutesInput" type="number" min="1" max="180" value="25" />
-              </label>
+              <label class="micro">Minutes: <input id="minutesInput" type="number" min="1" max="180" value="25" /></label>
             </div>
             <p class="micro" id="timerHint">Tip: set minutes, press Start, and focus.</p>
           </div>
@@ -108,11 +93,66 @@
       </div>
     </section>
 
+    <section id="games" class="card">
+      <h2>Fun Games</h2>
+      <p class="micro">Three mini-games to test yourself.</p>
+      <div class="grid">
+        <div class="game-card">
+          <h3>Reaction Time</h3>
+          <p>Click the box the moment it turns green.</p>
+          <div class="reaction-box" id="reactionBox">Press Start</div>
+          <div class="game-result" id="reactionResult">Result: --</div>
+          <div class="row">
+            <button class="button small" id="reactionStartBtn" type="button">Start</button>
+            <button class="button secondary small" id="reactionResetBtn" type="button">Reset</button>
+          </div>
+        </div>
+        <div class="game-card">
+          <h3>Number Guessing</h3>
+          <p>Guess the secret number between 1 and 100.</p>
+          <form id="guessForm" class="row">
+            <input id="guessInput" type="number" min="1" max="100" placeholder="1-100" required />
+            <button class="button small" type="submit">Guess</button>
+          </form>
+          <div class="game-result" id="guessFeedback">Enter a guess above to start.</div>
+          <div class="micro" id="guessStats">Attempts: 0</div>
+          <button class="button secondary small" id="newGameBtn" type="button" style="margin-top:6px">New Game</button>
+        </div>
+        <div class="game-card">
+          <h3>Daily Challenge</h3>
+          <p>Get a random productivity challenge for the day.</p>
+          <button class="button" id="challengeBtn" type="button" style="margin-top:6px">Generate Challenge</button>
+          <div class="game-result" id="challengeText" style="margin-top:10px;line-height:1.5"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rankings" class="card">
+      <h2>Rankings &amp; Votes</h2>
+      <p class="micro">Interactive rankings. Also on the <a href="./rankings.html">full Rankings page</a>.</p>
+      <div class="two-col">
+        <div>
+          <h3>Beer Ranking</h3>
+          <div class="row between">
+            <div class="micro" id="beerTotalText">Total votes: 0</div>
+            <button class="button secondary small" id="beerResetBtn" type="button">Reset</button>
+          </div>
+          <div id="beerList" class="vote-list"></div>
+        </div>
+        <div>
+          <h3>Vote: Best Sport</h3>
+          <div class="row between">
+            <div class="micro" id="sportTotalText">Total votes: 0</div>
+            <button class="button secondary small" id="sportResetBtn" type="button">Reset</button>
+          </div>
+          <div id="sportList" class="vote-list"></div>
+        </div>
+      </div>
+    </section>
+
     <section id="contact" class="card">
       <h2>Contact</h2>
-      <p>
-        Easiest way to reach me:
-      </p>
+      <p>Easiest way to reach me:</p>
       <ul class="bullets">
         <li>GitHub: <a href="https://github.com/justinstoneoh" target="_blank" rel="noreferrer">github.com/justinstoneoh</a></li>
         <li>Email: <span class="mono" id="emailText">click to reveal</span> <button class="button secondary small" id="revealEmailBtn" type="button">Reveal</button></li>
@@ -120,7 +160,7 @@
     </section>
 
     <footer class="footer">
-      <span class="micro">Built by Justin • Hosted on GitHub Pages</span>
+      <span class="micro">Built by Justin &bull; Hosted on GitHub Pages</span>
     </footer>
   </main>
 

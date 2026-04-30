@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X-Pulse Conspiracy Tracker | Justin Stone</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --x-black: #000000;
+            --x-blue: #1d9bf0;
+            --trending-red: #ff4b2b;
+        }
+        body {
+            background-color: #0b1020;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        .xpulse-hero {
+            background: linear-gradient(135deg, #000 0%, #172454 100%);
+            color: white;
+            padding: 48px 0 32px;
+            text-align: center;
+            margin-bottom: 32px;
+            border-bottom: 1px solid rgba(255,255,255,.12);
+        }
+        .conspiracy-card {
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 15px;
+            background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+            box-shadow: 0 4px 15px rgba(0,0,0,.3);
+            transition: transform 0.3s ease;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        .conspiracy-card:hover {
+            transform: translateY(-4px);
+        }
+        .conspiracy-card .card-body {
+            color: #e8ecff;
+        }
+        .conspiracy-card .card-text {
+            color: #aab3da;
+        }
+        .rank-badge {
+            background-color: var(--x-blue);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .metric-box {
+            background: rgba(29,155,240,.12);
+            border: 1px solid rgba(29,155,240,.3);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 0.85rem;
+            color: #6aa6ff;
+            margin-top: 10px;
+        }
+        .xpulse-footer {
+            padding: 32px 0;
+            text-align: center;
+            color: #aab3da;
+            font-size: 0.8rem;
+        }
+        .text-muted { color: #aab3da !important; }
+    </style>
+</head>
+<body>
+
+    <header class="container" style="padding-top:16px;padding-bottom:0">
+        <nav class="nav">
+            <div class="brand">Justin Stone</div>
+            <div class="links">
+                <a href="./index.html">&larr; Home</a>
+                <a href="./index.html#games">Fun Games</a>
+                <a href="./rankings.html">Rankings</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="xpulse-hero">
+        <div class="container">
+            <h1 class="display-5 fw-bold">&#x1F525; Top 5 Conspiracy Theories</h1>
+            <p class="lead" style="color:#aab3da">Trending on X (formerly Twitter) &mdash; April 2026 Update</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row justify-content-center" id="theory-container">
+        </div>
+    </div>
+
+    <footer class="xpulse-footer">
+        <p>Data compiled based on X metrics, hashtag volume, and 2026 declassification trends.</p>
+        <p><em>Disclaimer: This site is for educational and entertainment purposes. These theories are not verified facts.</em></p>
+    </footer>
+
+    <script>
+        const theories = [
+            {
+                rank: 1,
+                title: "CIA Double-Header: JFK &amp; MLK",
+                claim: "CIA orchestrated the assassinations to preserve the military-industrial complex and suppress civil rights movements.",
+                whyTrending: "Final 2026 declassification deadline met with heavy redactions, fueling 'Deep State' narratives.",
+                metric: "3.5B Impressions"
+            },
+            {
+                rank: 2,
+                title: "Flat Earth &amp; The Ice Wall",
+                claim: "The Earth is a plane; Antarctica is an 'Ice Wall' guarded by global militaries to hide the edge.",
+                whyTrending: "Surge in high-altitude balloon footage and viral 'laser tests' shared on social feeds.",
+                metric: "2.2B Hashtag Views"
+            },
+            {
+                rank: 3,
+                title: "Moon Landing Hoax (Artemis Era)",
+                claim: "Apollo landings were faked. If 2026 tech struggles to return to the moon, 1969 tech couldn't have done it.",
+                whyTrending: "Delays in NASA's Artemis III mission compared to rapid China lunar progress.",
+                metric: "1.5B Impressions"
+            },
+            {
+                rank: 4,
+                title: "Helen Keller 'History Skepticism'",
+                claim: "Helen Keller was a political puppet; claims it was physically impossible for her to write books or fly planes.",
+                whyTrending: "Gen Z/Alpha creators using AI to 'debunk' historical logistics for viral engagement.",
+                metric: "800M Views"
+            },
+            {
+                rank: 5,
+                title: "Aliens &amp; Missing Scientists",
+                claim: "Extraterrestrials are real and collaborating with humans; recent scientist disappearances are 'extra-planetary transfers.'",
+                whyTrending: "2026 Congressional hearings regarding Non-Human Intelligence (NHI) and UAP sightings.",
+                metric: "4B+ Combined Mentions"
+            }
+        ];
+
+        function displayTheories() {
+            const container = document.getElementById('theory-container');
+            theories.forEach(t => {
+                const card = `
+                    <div class="col-md-8">
+                        <div class="card conspiracy-card">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="rank-badge">#${t.rank} Trending</span>
+                                    <span class="text-muted small">Updated: April 2026</span>
+                                </div>
+                                <h2 class="card-title h4 fw-bold" style="color:#e8ecff">${t.title}</h2>
+                                <p class="card-text">${t.claim}</p>
+                                <p class="mb-1" style="color:#e8ecff"><strong>The 2026 Trigger:</strong> ${t.whyTrending}</p>
+                                <div class="metric-box">
+                                    <strong>Viral Metric:</strong> ${t.metric}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+
+        window.onload = displayTheories;
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
