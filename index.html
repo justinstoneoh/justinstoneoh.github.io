@@ -15,15 +15,17 @@
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
         <a href="#tools">Interactive</a>
+        <a href="#rankings">Rankings</a>
+        <a href="#xpulse">X-Pulse</a>
         <a href="#contact">Contact</a>
       </div>
     </nav>
 
     <section class="hero">
-      <h1>Hi, I’m Justin.</h1>
+      <h1>Hi, I'm Justin.</h1>
       <p>
-        Welcome to my GitHub Pages site. It includes an interactive tool (goal tracker + focus timer)
-        to prove it’s not just static.
+        Welcome to my GitHub Pages site. It includes interactive tools, rankings, viral trends,
+        and more — all in one place.
       </p>
 
       <div class="hero-actions">
@@ -31,6 +33,7 @@
         <a class="button secondary" href="./Justin%20Stone%20Resume%202026%20(Current).pdf" target="_blank" rel="noreferrer">
           View Resume (PDF)
         </a>
+        <a class="button secondary" href="https://www.bengals.com/" target="_blank" rel="noreferrer">Bengals Website</a>
       </div>
 
       <p class="micro" id="todayLine"></p>
@@ -38,10 +41,12 @@
   </header>
 
   <main class="container">
+
+    <!-- About -->
     <section id="about" class="card">
       <h2>About</h2>
       <p>
-        I’m building skills by shipping real projects. This site is deployed on GitHub Pages and includes
+        I'm building skills by shipping real projects. This site is deployed on GitHub Pages and includes
         interactive features built with HTML/CSS/JS.
       </p>
       <ul class="bullets">
@@ -51,6 +56,7 @@
       </ul>
     </section>
 
+    <!-- Projects -->
     <section id="projects" class="card">
       <h2>Projects</h2>
       <div class="grid">
@@ -63,12 +69,21 @@
           <p>Simple Pomodoro-style timer with start/pause/reset.</p>
         </article>
         <article class="project">
+          <h3>Beer Rankings &amp; Sports Vote</h3>
+          <p>Upvote your favorites — results auto-sort and save locally.</p>
+        </article>
+        <article class="project">
+          <h3>X-Pulse Tracker</h3>
+          <p>Top trending conspiracy theories on X (formerly Twitter) — April 2026.</p>
+        </article>
+        <article class="project">
           <h3>Resume Link</h3>
           <p>One-click resume access (PDF) from the hero section.</p>
         </article>
       </div>
     </section>
 
+    <!-- Interactive: Goals + Focus Timer -->
     <section id="tools" class="card">
       <h2>Interactive: Goals + Focus Timer</h2>
 
@@ -108,6 +123,52 @@
       </div>
     </section>
 
+    <!-- Rankings & Votes -->
+    <section id="rankings" class="card">
+      <h2>Rankings &amp; Votes</h2>
+      <p class="micro">Results update instantly and save on your device.</p>
+
+      <div class="two-col">
+        <div>
+          <h3 id="beer">Beer Rankings</h3>
+          <p class="micro">Upvote your favorites. The list auto-sorts by score.</p>
+
+          <div class="row between">
+            <div class="micro" id="beerTotalText">Total votes: 0</div>
+            <button class="button secondary small" id="beerResetBtn" type="button">Reset</button>
+          </div>
+
+          <div id="beerList" class="vote-list"></div>
+        </div>
+
+        <div>
+          <h3 id="sports">Vote: Best Sport</h3>
+          <p class="micro">Cast votes and see the ranking change live.</p>
+
+          <div class="row between">
+            <div class="micro" id="sportTotalText">Total votes: 0</div>
+            <button class="button secondary small" id="sportResetBtn" type="button">Reset</button>
+          </div>
+
+          <div id="sportList" class="vote-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- X-Pulse Tracker (from index.html67) -->
+    <section id="xpulse" class="card">
+      <h2>&#x1F525; X-Pulse Tracker — Top 5 Conspiracy Theories</h2>
+      <p class="micro">Trending on X (formerly Twitter) — April 2026 Update</p>
+
+      <div id="theory-container" class="xpulse-grid"></div>
+
+      <p class="micro" style="margin-top:16px;">
+        Data compiled based on X metrics, hashtag volume, and 2026 declassification trends.
+        <em>Disclaimer: For educational and entertainment purposes only. These theories are not verified facts.</em>
+      </p>
+    </section>
+
+    <!-- Contact -->
     <section id="contact" class="card">
       <h2>Contact</h2>
       <p>
@@ -124,6 +185,6 @@
     </footer>
   </main>
 
-  <script src="script.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 Viral Trends | X-Pulse Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --x-black: #000000;
+            --x-blue: #1d9bf0;
+            --trending-red: #ff4b2b;
+        }
+        body {
+            background-color: #f8f9fa;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, var(--x-black) 0%, #333 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .conspiracy-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        .conspiracy-card:hover {
+            transform: translateY(-5px);
+        }
+        .rank-badge {
+            background-color: var(--x-blue);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .metric-box {
+            background: #e1f5fe;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 0.85rem;
+            color: #01579b;
+            margin-top: 10px;
+        }
+        .footer {
+            padding: 40px 0;
+            text-align: center;
+            color: #666;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="display-4 fw-bold">🔥 Top 5 Conspiracy Theories</h1>
+            <p class="lead">Trending on X (formerly Twitter) — April 2026 Update</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row justify-content-center" id="theory-container">
+            </div>
+    </div>
+
+    <footer class="footer">
+        <p>Data compiled based on X metrics, hashtag volume, and 2026 declassification trends.</p>
+        <p><em>Disclaimer: This site is for educational and entertainment purposes. These theories are not verified facts.</em></p>
+    </footer>
+
+    <script>
+        const theories = [
+            {
+                rank: 1,
+                title: "CIA Double-Header: JFK & MLK",
+                claim: "CIA orchestrated the assassinations to preserve the military-industrial complex and suppress civil rights movements.",
+                whyTrending: "Final 2026 declassification deadline met with heavy redactions, fueling 'Deep State' narratives.",
+                metric: "3.5B Impressions"
+            },
+            {
+                rank: 2,
+                title: "Flat Earth & The Ice Wall",
+                claim: "The Earth is a plane; Antarctica is an 'Ice Wall' guarded by global militaries to hide the edge.",
+                whyTrending: "Surge in high-altitude balloon footage and viral 'laser tests' shared on social feeds.",
+                metric: "2.2B Hashtag Views"
+            },
+            {
+                rank: 3,
+                title: "Moon Landing Hoax (Artemis Era)",
+                claim: "Apollo landings were faked. If 2026 tech struggles to return to the moon, 1969 tech couldn't have done it.",
+                whyTrending: "Delays in NASA's Artemis III mission compared to rapid China lunar progress.",
+                metric: "1.5B Impressions"
+            },
+            {
+                rank: 4,
+                title: "Helen Keller 'History Skepticism'",
+                claim: "Helen Keller was a political puppet; claims it was physically impossible for her to write books or fly planes.",
+                whyTrending: "Gen Z/Alpha creators using AI to 'debunk' historical logistics for viral engagement.",
+                metric: "800M Views"
+            },
+            {
+                rank: 5,
+                title: "Aliens & Missing Scientists",
+                claim: "Extraterrestrials are real and collaborating with humans; recent scientist disappearances are 'extra-planetary transfers.'",
+                whyTrending: "2026 Congressional hearings regarding Non-Human Intelligence (NHI) and UAP sightings.",
+                metric: "4B+ Combined Mentions"
+            }
+        ];
+
+        function displayTheories() {
+            const container = document.getElementById('theory-container');
+            theories.forEach(t => {
+                const card = `
+                    <div class="col-md-8">
+                        <div class="card conspiracy-card">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="rank-badge">#${t.rank} Trending</span>
+                                    <span class="text-muted small">Updated: April 2026</span>
+                                </div>
+                                <h2 class="card-title h4 fw-bold">${t.title}</h2>
+                                <p class="card-text text-secondary">${t.claim}</p>
+                                <p class="mb-1"><strong>The 2026 Trigger:</strong> ${t.whyTrending}</p>
+                                <div class="metric-box">
+                                    <strong>Viral Metric:</strong> ${t.metric}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+
+        window.onload = displayTheories;
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
