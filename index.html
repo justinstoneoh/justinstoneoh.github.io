@@ -15,6 +15,8 @@
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
         <a href="#tools">Interactive</a>
+        <a href="#fun">Fun & Games</a>
+        <a href="./rankings.html">Rankings & Votes</a>
         <a href="#contact">Contact</a>
       </div>
     </nav>
@@ -22,12 +24,14 @@
     <section class="hero">
       <h1>Hi, I’m Justin.</h1>
       <p>
-        Welcome to my GitHub Pages site. It includes an interactive tool (goal tracker + focus timer)
-        to prove it’s not just static.
+        Welcome to my GitHub Pages site. It includes interactive tools (goal tracker + focus timer),
+        fun mini-games, and a rankings &amp; votes page.
       </p>
 
       <div class="hero-actions">
         <a class="button" href="#tools">Try the Interactive Tool</a>
+        <a class="button secondary" href="#fun">Fun &amp; Games</a>
+        <a class="button secondary" href="./rankings.html">Rankings &amp; Votes</a>
         <a class="button secondary" href="./Justin%20Stone%20Resume%202026%20(Current).pdf" target="_blank" rel="noreferrer">
           View Resume (PDF)
         </a>
@@ -61,6 +65,18 @@
         <article class="project">
           <h3>Focus Timer</h3>
           <p>Simple Pomodoro-style timer with start/pause/reset.</p>
+        </article>
+        <article class="project">
+          <h3>Rankings &amp; Votes</h3>
+          <p>Vote on beer rankings and best sports. Results save in your browser.</p>
+        </article>
+        <article class="project">
+          <h3>Reaction Time Game</h3>
+          <p>Test your reflexes — wait for green and click as fast as you can.</p>
+        </article>
+        <article class="project">
+          <h3>Number Guessing Game</h3>
+          <p>Guess the secret number 1–100 with high/low hints.</p>
         </article>
         <article class="project">
           <h3>Resume Link</h3>
@@ -104,6 +120,47 @@
             </div>
             <p class="micro" id="timerHint">Tip: set minutes, press Start, and focus.</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fun" class="card">
+      <h2>Fun &amp; Games</h2>
+
+      <div class="three-col">
+        <!-- Reaction Time Game -->
+        <div>
+          <h3>Reaction Time</h3>
+          <p class="micro">Wait for green, then click as fast as you can.</p>
+          <div id="reactionBox" class="reaction-box">Press Start</div>
+          <div class="row">
+            <button class="button small" id="reactionStartBtn" type="button">Start</button>
+            <button class="button secondary small" id="reactionResetBtn" type="button">Reset</button>
+          </div>
+          <div class="micro" id="reactionResult">Result: —</div>
+        </div>
+
+        <!-- Number Guessing Game -->
+        <div>
+          <h3>Number Guessing</h3>
+          <p class="micro">Guess a number between 1 and 100.</p>
+          <form id="guessForm" class="row">
+            <input id="guessInput" type="number" min="1" max="100" placeholder="1–100" required />
+            <button class="button small" type="submit">Guess</button>
+          </form>
+          <div class="micro" id="guessFeedback">Guess a number 1–100.</div>
+          <div class="row between">
+            <div class="micro" id="guessStats">Attempts: 0</div>
+            <button class="button secondary small" id="newGameBtn" type="button">New Game</button>
+          </div>
+        </div>
+
+        <!-- Daily Challenge Generator -->
+        <div>
+          <h3>Daily Challenge</h3>
+          <p class="micro">Get a random productivity challenge for today.</p>
+          <button class="button" id="challengeBtn" type="button">Get Challenge</button>
+          <p class="micro" id="challengeText" style="margin-top:10px;line-height:1.5;"></p>
         </div>
       </div>
     </section>
