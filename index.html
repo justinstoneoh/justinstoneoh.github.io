@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Justin Stone | Personal Site</title>
+  <meta name="description" content="Justin Stone's personal site — goal tracker, focus timer, beer rankings, and sports voting." />
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -15,6 +16,8 @@
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
         <a href="#tools">Interactive</a>
+        <a href="#beer">Beer Rankings</a>
+        <a href="#sports">Best Sport Vote</a>
         <a href="#contact">Contact</a>
       </div>
     </nav>
@@ -22,8 +25,8 @@
     <section class="hero">
       <h1>Hi, I’m Justin.</h1>
       <p>
-        Welcome to my GitHub Pages site. It includes an interactive tool (goal tracker + focus timer)
-        to prove it’s not just static.
+        Welcome to my GitHub Pages site. It includes interactive tools: goal tracker, focus timer,
+        beer rankings, and a sports voting board.
       </p>
 
       <div class="hero-actions">
@@ -65,6 +68,10 @@
         <article class="project">
           <h3>Resume Link</h3>
           <p>One-click resume access (PDF) from the hero section.</p>
+        </article>
+        <article class="project">
+          <h3>X-Pulse Tracker</h3>
+          <p>Top trending conspiracy theories on X (2026). <a href="./drafts/index-67.html">View page →</a></p>
         </article>
       </div>
     </section>
@@ -108,6 +115,30 @@
       </div>
     </section>
 
+    <section id="beer" class="card">
+      <h2>Beer Rankings</h2>
+      <p class="micro">Upvote your favorites. The list auto-sorts by score.</p>
+
+      <div class="row between">
+        <div class="micro" id="beerTotalText">Total votes: 0</div>
+        <button class="button secondary small" id="beerResetBtn" type="button">Reset</button>
+      </div>
+
+      <div id="beerList" class="vote-list"></div>
+    </section>
+
+    <section id="sports" class="card">
+      <h2>Vote: Best Sport</h2>
+      <p class="micro">Cast votes and see the ranking change live.</p>
+
+      <div class="row between">
+        <div class="micro" id="sportTotalText">Total votes: 0</div>
+        <button class="button secondary small" id="sportResetBtn" type="button">Reset</button>
+      </div>
+
+      <div id="sportList" class="vote-list"></div>
+    </section>
+
     <section id="contact" class="card">
       <h2>Contact</h2>
       <p>
@@ -125,5 +156,6 @@
   </main>
 
   <script src="script.js"></script>
+  <script src="rankings.js"></script>
 </body>
 </html>
