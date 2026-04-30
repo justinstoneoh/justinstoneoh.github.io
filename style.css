@@ -87,6 +87,18 @@ input{
 
 .footer{display:flex;justify-content:center;padding:20px 0 0}
 
+.vote-list{margin:10px 0 0}
+.vote-item{border:1px solid var(--border);border-radius:12px;padding:12px;margin:8px 0}
+.vote-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.vote-title{font-weight:600;margin-bottom:2px}
+.vote-bar{height:8px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+.vote-bar>div{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .4s ease}
+
+.fav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:10px}
+.fav-card{border:1px solid var(--border);border-radius:14px;padding:14px}
+.fav-card h4{margin:0 0 6px;font-size:14px;color:var(--accent)}
+.fav-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.4}
+
 @media (max-width: 860px){
   .grid{grid-template-columns:1fr}
   .two-col{grid-template-columns:1fr}
