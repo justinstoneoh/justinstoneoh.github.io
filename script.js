@@ -233,11 +233,17 @@ const guessFeedback = $("#guessFeedback");
 const guessStats = $("#guessStats");
 const newGameBtn = $("#newGameBtn");
 
-let secretNumber = Math.floor(Math.random() * 100) + 1;
+function randomIntSecure(min, max) {
+  const arr = new Uint32Array(1);
+  crypto.getRandomValues(arr);
+  return min + (arr[0] % (max - min + 1));
+}
+
+let secretNumber = randomIntSecure(1, 100);
 let attempts = 0;
 
 function newGame() {
-  secretNumber = Math.floor(Math.random() * 100) + 1;
+  secretNumber = randomIntSecure(1, 100);
   attempts = 0;
   if (guessInput) guessInput.value = "";
   if (guessFeedback) guessFeedback.textContent = "New game started. Guess a number 1–100.";
