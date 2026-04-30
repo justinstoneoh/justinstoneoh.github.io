@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Games | Justin Stone</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Game Tabs ── */
+    .tab-bar{display:flex;gap:10px;margin:0 0 18px;flex-wrap:wrap}
+    .tab{padding:10px 18px;border-radius:12px;border:1px solid var(--border);
+         background:rgba(255,255,255,.05);color:var(--muted);cursor:pointer;font-weight:600;
+         transition:background .15s,color .15s}
+    .tab.active,.tab:hover{background:rgba(106,166,255,.2);color:var(--text);
+         border-color:rgba(106,166,255,.5)}
+    .game-panel{display:none}
+    .game-panel.active{display:block}
+
+    /* ── Snake ── */
+    #snakeWrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+    #snakeCanvas{border:2px solid var(--border);border-radius:12px;background:#0a0f20;
+                 display:block;max-width:100%;cursor:default;touch-action:none}
+    .score-row{display:flex;gap:24px;align-items:center}
+    .score-box{background:rgba(255,255,255,.06);border:1px solid var(--border);
+               border-radius:12px;padding:10px 20px;text-align:center}
+    .score-box .val{font-size:28px;font-weight:800;color:var(--accent2)}
+    .score-box .lbl{font-size:12px;color:var(--muted);margin-top:2px}
+    #snakeMsg{min-height:26px;font-size:15px;color:var(--accent2);font-weight:700;text-align:center}
+    .dpad{display:grid;grid-template-columns:repeat(3,52px);grid-template-rows:repeat(2,52px);
+          gap:6px;margin-top:4px}
+    .dpad button{width:52px;height:52px;border-radius:12px;border:1px solid var(--border);
+                 background:rgba(255,255,255,.08);color:var(--text);font-size:22px;
+                 cursor:pointer;display:flex;align-items:center;justify-content:center;
+                 transition:background .1s}
+    .dpad button:active,.dpad button:hover{background:rgba(106,166,255,.25)}
+    .dpad .empty{visibility:hidden}
+
+    /* ── Tic-Tac-Toe ── */
+    #tttWrap{display:flex;flex-direction:column;align-items:center;gap:16px}
+    #tttBoard{display:grid;grid-template-columns:repeat(3,100px);
+              grid-template-rows:repeat(3,100px);gap:6px}
+    .ttt-cell{width:100px;height:100px;border-radius:14px;
+              border:1px solid var(--border);background:rgba(255,255,255,.06);
+              font-size:46px;display:flex;align-items:center;justify-content:center;
+              cursor:pointer;transition:background .15s,transform .1s;
+              user-select:none}
+    .ttt-cell:hover:not(.taken){background:rgba(106,166,255,.15);transform:scale(1.04)}
+    .ttt-cell.taken{cursor:default}
+    .ttt-cell.X{color:#6aa6ff}
+    .ttt-cell.O{color:#8bffcf}
+    .ttt-cell.win{background:rgba(139,255,207,.18);border-color:var(--accent2)}
+    #tttStatus{font-size:18px;font-weight:700;color:var(--text);min-height:28px;text-align:center}
+    #tttScore{display:flex;gap:24px;justify-content:center}
+    #tttRestart{margin-top:4px}
+
+    /* ── Reaction Timer ── */
+    #reactionWrap{display:flex;flex-direction:column;align-items:center;gap:16px}
+    #reactionBox{width:min(340px,100%);height:200px;border-radius:20px;
+                 display:flex;align-items:center;justify-content:center;
+                 font-size:22px;font-weight:700;cursor:pointer;
+                 transition:background .2s;border:2px solid var(--border);
+                 user-select:none;-webkit-tap-highlight-color:transparent}
+    #reactionBox.wait{background:rgba(255,80,80,.15);color:#ff6666;border-color:rgba(255,80,80,.4)}
+    #reactionBox.ready{background:rgba(139,255,207,.18);color:var(--accent2);border-color:var(--accent2)}
+    #reactionBox.idle{background:rgba(255,255,255,.05);color:var(--muted)}
+    #reactionTimes{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+                   max-width:380px;margin-top:4px}
+    .rt-chip{background:rgba(255,255,255,.06);border:1px solid var(--border);
+             border-radius:8px;padding:5px 12px;font-size:13px;color:var(--muted)}
+    .rt-chip.best{border-color:rgba(139,255,207,.5);color:var(--accent2)}
+    #reactionStats{font-size:14px;color:var(--muted);text-align:center;min-height:22px}
+
+    @media (max-width:500px){
+      #tttBoard{grid-template-columns:repeat(3,80px);grid-template-rows:repeat(3,80px)}
+      .ttt-cell{width:80px;height:80px;font-size:36px}
+    }
+  </style>
+</head>
+
+<body>
+  <header class="container">
+    <nav class="nav">
+      <div class="brand">Justin Stone</div>
+      <div class="links">
+        <a href="./index.html">Home</a>
+        <a href="#games">Games</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <h1>🎮 Arcade</h1>
+      <p>Three mini-games — Snake, Tic-Tac-Toe, and Reaction Timer — all running in your browser, no install needed.</p>
+    </section>
+  </header>
+
+  <main class="container">
+    <section id="games" class="card">
+      <div class="tab-bar" role="tablist">
+        <button class="tab active" role="tab" aria-selected="true"  data-target="panelSnake">🐍 Snake</button>
+        <button class="tab"        role="tab" aria-selected="false" data-target="panelTTT">⭕ Tic-Tac-Toe</button>
+        <button class="tab"        role="tab" aria-selected="false" data-target="panelReact">⚡ Reaction</button>
+      </div>
+
+      <!-- ══════════ SNAKE ══════════ -->
+      <div id="panelSnake" class="game-panel active">
+        <div id="snakeWrap">
+          <div class="score-row">
+            <div class="score-box"><div class="val" id="snakeScore">0</div><div class="lbl">Score</div></div>
+            <div class="score-box"><div class="val" id="snakeBest">0</div><div class="lbl">Best</div></div>
+          </div>
+          <div id="snakeMsg">Press Start or tap the canvas to begin</div>
+          <canvas id="snakeCanvas" width="360" height="360" tabindex="0"
+                  aria-label="Snake game canvas"></canvas>
+          <div class="row" style="gap:10px">
+            <button class="button" id="snakeStartBtn" type="button">▶ Start</button>
+            <button class="button secondary" id="snakePauseBtn" type="button" disabled>⏸ Pause</button>
+          </div>
+          <!-- Mobile D-Pad -->
+          <div class="dpad" id="dpad" aria-label="Directional controls">
+            <div class="empty"></div>
+            <button type="button" data-dir="UP"    aria-label="Up">▲</button>
+            <div class="empty"></div>
+            <button type="button" data-dir="LEFT"  aria-label="Left">◀</button>
+            <button type="button" data-dir="DOWN"  aria-label="Down">▼</button>
+            <button type="button" data-dir="RIGHT" aria-label="Right">▶</button>
+          </div>
+          <p class="micro" style="text-align:center">Keyboard: Arrow keys or WASD</p>
+        </div>
+      </div>
+
+      <!-- ══════════ TIC-TAC-TOE ══════════ -->
+      <div id="panelTTT" class="game-panel">
+        <div id="tttWrap">
+          <div id="tttScore">
+            <div class="score-box"><div class="val" id="tttX">0</div><div class="lbl">X (You)</div></div>
+            <div class="score-box"><div class="val" id="tttDraw">0</div><div class="lbl">Draws</div></div>
+            <div class="score-box"><div class="val" id="tttO">0</div><div class="lbl">O (CPU)</div></div>
+          </div>
+          <div id="tttStatus">Your turn (X)</div>
+          <div id="tttBoard" role="grid" aria-label="Tic-Tac-Toe board"></div>
+          <button class="button secondary" id="tttRestart" type="button">New Game</button>
+          <p class="micro">You are X — play against the AI (minimax)</p>
+        </div>
+      </div>
+
+      <!-- ══════════ REACTION TIMER ══════════ -->
+      <div id="panelReact" class="game-panel">
+        <div id="reactionWrap">
+          <p style="color:var(--muted);text-align:center;max-width:36ch">
+            Wait for the box to turn green, then tap/click it as fast as you can!
+          </p>
+          <div id="reactionBox" class="idle" tabindex="0" role="button"
+               aria-label="Reaction timer target">Click to start</div>
+          <div id="reactionStats"></div>
+          <div id="reactionTimes"></div>
+          <button class="button secondary" id="reactionReset" type="button">Reset scores</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span class="micro">Built by Justin • Hosted on GitHub Pages</span>
+    </footer>
+  </main>
+
+  <script>
+  /* ========================================================
+     Tab switcher
+  ======================================================== */
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(t => { t.classList.remove("active"); t.setAttribute("aria-selected","false"); });
+      document.querySelectorAll(".game-panel").forEach(p => p.classList.remove("active"));
+      tab.classList.add("active");
+      tab.setAttribute("aria-selected","true");
+      document.getElementById(tab.dataset.target).classList.add("active");
+    });
+  });
+
+  /* ========================================================
+     SNAKE
+  ======================================================== */
+  (function(){
+    const COLS = 18, ROWS = 18, CELL = 20;
+    const COLORS = { head:"#6aa6ff", body:"#3d78cc", food:"#8bffcf", grid:"rgba(255,255,255,.04)" };
+    const canvas = document.getElementById("snakeCanvas");
+    const ctx    = canvas.getContext("2d");
+    // Resize canvas to match COLS/ROWS
+    canvas.width  = COLS * CELL;
+    canvas.height = ROWS * CELL;
+
+    const scoreEl = document.getElementById("snakeScore");
+    const bestEl  = document.getElementById("snakeBest");
+    const msgEl   = document.getElementById("snakeMsg");
+    const startBtn = document.getElementById("snakeStartBtn");
+    const pauseBtn = document.getElementById("snakePauseBtn");
+
+    const DIRS = { UP:[0,-1], DOWN:[0,1], LEFT:[-1,0], RIGHT:[1,0] };
+    const OPP  = { UP:"DOWN", DOWN:"UP", LEFT:"RIGHT", RIGHT:"LEFT" };
+
+    let snake, dir, nextDir, food, score, best, loop, running, paused;
+
+    best = Number(localStorage.getItem("snake_best") || 0);
+    bestEl.textContent = best;
+
+    function randCell() {
+      return { x: Math.floor(Math.random() * COLS), y: Math.floor(Math.random() * ROWS) };
+    }
+
+    function placeFood() {
+      let f;
+      do { f = randCell(); } while (snake.some(s => s.x === f.x && s.y === f.y));
+      food = f;
+    }
+
+    function init() {
+      const cx = Math.floor(COLS/2), cy = Math.floor(ROWS/2);
+      snake   = [{x:cx,y:cy},{x:cx-1,y:cy},{x:cx-2,y:cy}];
+      dir     = "RIGHT";
+      nextDir = "RIGHT";
+      score   = 0;
+      scoreEl.textContent = 0;
+      placeFood();
+    }
+
+    function draw() {
+      ctx.fillStyle = "#0a0f20";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // grid
+      ctx.strokeStyle = COLORS.grid;
+      ctx.lineWidth = 1;
+      for (let x = 0; x <= COLS; x++) { ctx.beginPath(); ctx.moveTo(x*CELL,0); ctx.lineTo(x*CELL,canvas.height); ctx.stroke(); }
+      for (let y = 0; y <= ROWS; y++) { ctx.beginPath(); ctx.moveTo(0,y*CELL); ctx.lineTo(canvas.width,y*CELL); ctx.stroke(); }
+
+      // food
+      const fx = food.x * CELL + CELL/2, fy = food.y * CELL + CELL/2, fr = CELL/2 - 2;
+      ctx.beginPath(); ctx.arc(fx, fy, fr, 0, Math.PI*2);
+      ctx.fillStyle = COLORS.food; ctx.fill();
+
+      // snake
+      snake.forEach((seg, i) => {
+        const r = 5;
+        const x = seg.x*CELL+1, y = seg.y*CELL+1, w = CELL-2, h = CELL-2;
+        ctx.fillStyle = i === 0 ? COLORS.head : COLORS.body;
+        ctx.beginPath();
+        ctx.roundRect(x, y, w, h, r);
+        ctx.fill();
+      });
+    }
+
+    function step() {
+      dir = nextDir;
+      const d = DIRS[dir];
+      const head = { x: snake[0].x + d[0], y: snake[0].y + d[1] };
+
+      // wall collision
+      if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS) { gameOver(); return; }
+      // self collision
+      if (snake.some(s => s.x === head.x && s.y === head.y)) { gameOver(); return; }
+
+      snake.unshift(head);
+
+      if (head.x === food.x && head.y === food.y) {
+        score++;
+        scoreEl.textContent = score;
+        if (score > best) { best = score; bestEl.textContent = best; localStorage.setItem("snake_best", best); }
+        placeFood();
+      } else {
+        snake.pop();
+      }
+
+      draw();
+    }
+
+    function gameOver() {
+      clearInterval(loop);
+      running = false;
+      paused  = false;
+      startBtn.textContent = "▶ Restart";
+      startBtn.disabled = false;
+      pauseBtn.disabled = true;
+      msgEl.textContent = `💀 Game over! Score: ${score}`;
+      draw();
+      // draw overlay
+      ctx.fillStyle = "rgba(0,0,0,.55)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#fff";
+      ctx.font = "bold 28px system-ui";
+      ctx.textAlign = "center";
+      ctx.fillText("GAME OVER", canvas.width/2, canvas.height/2 - 14);
+      ctx.font = "16px system-ui";
+      ctx.fillText(`Score: ${score}  Best: ${best}`, canvas.width/2, canvas.height/2 + 16);
+    }
+
+    function startGame() {
+      if (loop) clearInterval(loop);
+      init();
+      draw();
+      running = true;
+      paused  = false;
+      startBtn.textContent = "↺ Restart";
+      pauseBtn.disabled = false;
+      msgEl.textContent = "Use arrow keys / WASD or the D-pad below";
+      const speed = 150;
+      loop = setInterval(step, speed);
+      canvas.focus();
+    }
+
+    function togglePause() {
+      if (!running) return;
+      if (!paused) {
+        clearInterval(loop);
+        paused = true;
+        pauseBtn.textContent = "▶ Resume";
+        msgEl.textContent = "Paused";
+      } else {
+        loop = setInterval(step, 150);
+        paused = false;
+        pauseBtn.textContent = "⏸ Pause";
+        msgEl.textContent = "";
+      }
+    }
+
+    startBtn.addEventListener("click", startGame);
+    pauseBtn.addEventListener("click", togglePause);
+    canvas.addEventListener("click", () => { if (!running) startGame(); });
+
+    // Keyboard
+    const KEY_MAP = {
+      ArrowUp:"UP", ArrowDown:"DOWN", ArrowLeft:"LEFT", ArrowRight:"RIGHT",
+      w:"UP", s:"DOWN", a:"LEFT", d:"RIGHT",
+      W:"UP", S:"DOWN", A:"LEFT", D:"RIGHT"
+    };
+    document.addEventListener("keydown", e => {
+      const d = KEY_MAP[e.key];
+      if (d) {
+        if (running && !paused && OPP[d] !== dir) nextDir = d;
+        if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.key)) e.preventDefault();
+      }
+    });
+
+    // D-Pad
+    document.getElementById("dpad").querySelectorAll("button[data-dir]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const d = btn.dataset.dir;
+        if (running && !paused && OPP[d] !== dir) nextDir = d;
+      });
+    });
+
+    // Swipe support
+    let tx0, ty0;
+    canvas.addEventListener("touchstart", e => { tx0 = e.touches[0].clientX; ty0 = e.touches[0].clientY; }, {passive:true});
+    canvas.addEventListener("touchend", e => {
+      if (tx0 === null || tx0 === undefined) return;
+      const dx = e.changedTouches[0].clientX - tx0;
+      const dy = e.changedTouches[0].clientY - ty0;
+      const adx = Math.abs(dx), ady = Math.abs(dy);
+      if (Math.max(adx,ady) < 10) { if (!running) startGame(); return; }
+      let d;
+      if (adx > ady) d = dx > 0 ? "RIGHT" : "LEFT";
+      else            d = dy > 0 ? "DOWN"  : "UP";
+      if (running && !paused && OPP[d] !== dir) nextDir = d;
+      tx0 = ty0 = null;
+    });
+
+    // Initial draw
+    init();
+    draw();
+    ctx.fillStyle = "rgba(0,0,0,.5)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#fff";
+    ctx.font = "bold 22px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText("Press Start to play!", canvas.width/2, canvas.height/2);
+  })();
+
+  /* ========================================================
+     TIC-TAC-TOE  (minimax AI)
+  ======================================================== */
+  (function(){
+    const board    = document.getElementById("tttBoard");
+    const statusEl = document.getElementById("tttStatus");
+    const restartBtn = document.getElementById("tttRestart");
+    const xScoreEl  = document.getElementById("tttX");
+    const oScoreEl  = document.getElementById("tttO");
+    const drawEl    = document.getElementById("tttDraw");
+
+    const WINS = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    let cells, xScore=0, oScore=0, draws=0, playerTurn, gameActive;
+
+    function checkWinner(c) {
+      for (const [a,b,cc] of WINS) {
+        if (c[a] && c[a]===c[b] && c[b]===c[cc]) return { winner: c[a], line:[a,b,cc] };
+      }
+      if (c.every(Boolean)) return { winner: "draw" };
+      return null;
+    }
+
+    function minimax(c, isMax) {
+      const r = checkWinner(c);
+      if (r) { if(r.winner==="O") return 10; if(r.winner==="X") return -10; return 0; }
+      const scores = [];
+      c.forEach((v,i) => {
+        if (!v) {
+          const nc = [...c]; nc[i] = isMax ? "O" : "X";
+          scores.push(minimax(nc, !isMax));
+        }
+      });
+      return isMax ? Math.max(...scores) : Math.min(...scores);
+    }
+
+    function cpuMove() {
+      let best = -Infinity, idx = -1;
+      cells.forEach((v,i) => {
+        if (!v) {
+          const nc = [...cells]; nc[i] = "O";
+          const s = minimax(nc, false);
+          if (s > best) { best = s; idx = i; }
+        }
+      });
+      return idx;
+    }
+
+    function renderBoard() {
+      board.innerHTML = "";
+      cells.forEach((v, i) => {
+        const cell = document.createElement("div");
+        cell.className = "ttt-cell" + (v ? " taken " + v : "");
+        cell.textContent = v || "";
+        cell.setAttribute("role","gridcell");
+        cell.setAttribute("aria-label", `Cell ${i+1}${v ? ": "+v : ""}`);
+        cell.addEventListener("click", () => handleClick(i));
+        board.appendChild(cell);
+      });
+    }
+
+    function highlightWin(line) {
+      const divs = board.querySelectorAll(".ttt-cell");
+      line.forEach(i => divs[i].classList.add("win"));
+    }
+
+    function handleClick(i) {
+      if (!gameActive || !playerTurn || cells[i]) return;
+      cells[i] = "X";
+      renderBoard();
+
+      const res = checkWinner(cells);
+      if (res) { endGame(res); return; }
+
+      playerTurn = false;
+      statusEl.textContent = "CPU is thinking…";
+      setTimeout(() => {
+        const idx = cpuMove();
+        if (idx !== -1) cells[idx] = "O";
+        renderBoard();
+        const res2 = checkWinner(cells);
+        if (res2) { endGame(res2); return; }
+        playerTurn = true;
+        statusEl.textContent = "Your turn (X)";
+      }, 250);
+    }
+
+    function endGame(res) {
+      gameActive = false;
+      if (res.winner === "X") {
+        xScore++; xScoreEl.textContent = xScore;
+        statusEl.textContent = "🎉 You win!";
+        highlightWin(res.line);
+      } else if (res.winner === "O") {
+        oScore++; oScoreEl.textContent = oScore;
+        statusEl.textContent = "🤖 CPU wins!";
+        highlightWin(res.line);
+      } else {
+        draws++; drawEl.textContent = draws;
+        statusEl.textContent = "🤝 It's a draw!";
+      }
+    }
+
+    function newGame() {
+      cells = Array(9).fill("");
+      gameActive = true;
+      playerTurn = true;
+      statusEl.textContent = "Your turn (X)";
+      renderBoard();
+    }
+
+    restartBtn.addEventListener("click", newGame);
+    newGame();
+  })();
+
+  /* ========================================================
+     REACTION TIMER
+  ======================================================== */
+  (function(){
+    const box       = document.getElementById("reactionBox");
+    const statsEl   = document.getElementById("reactionStats");
+    const timesEl   = document.getElementById("reactionTimes");
+    const resetBtn  = document.getElementById("reactionReset");
+
+    const KEY = "reaction_times_v1";
+    let state = "idle"; // idle | wait | ready
+    let waitTimeout = null, startTime = null;
+    let times = [];
+    try { times = JSON.parse(localStorage.getItem(KEY)) || []; } catch { times = []; }
+
+    function renderTimes() {
+      timesEl.innerHTML = "";
+      if (!times.length) { statsEl.textContent = ""; return; }
+      const best = Math.min(...times);
+      const avg  = Math.round(times.reduce((a,b)=>a+b,0)/times.length);
+      statsEl.textContent = `Best: ${best} ms  •  Avg: ${avg} ms  •  Trials: ${times.length}`;
+      [...times].reverse().slice(0,8).forEach(t => {
+        const chip = document.createElement("div");
+        chip.className = "rt-chip" + (t === best ? " best" : "");
+        chip.textContent = t + " ms";
+        timesEl.appendChild(chip);
+      });
+    }
+
+    function start() {
+      if (state !== "idle") return;
+      state = "wait";
+      box.className = "wait";
+      box.textContent = "Wait for green…";
+      const delay = 1500 + Math.random() * 3000;
+      waitTimeout = setTimeout(() => {
+        state = "ready";
+        box.className = "ready";
+        box.textContent = "Click NOW!";
+        startTime = performance.now();
+      }, delay);
+    }
+
+    function react() {
+      if (state === "idle") { start(); return; }
+      if (state === "wait") {
+        clearTimeout(waitTimeout);
+        state = "idle";
+        box.className = "idle";
+        box.textContent = "Too early! Click to try again";
+        return;
+      }
+      if (state === "ready") {
+        const rt = Math.round(performance.now() - startTime);
+        times.push(rt);
+        if (times.length > 50) times.shift();
+        localStorage.setItem(KEY, JSON.stringify(times));
+        renderTimes();
+        state = "idle";
+        box.className = "idle";
+        box.textContent = `${rt} ms — Click to go again`;
+      }
+    }
+
+    box.addEventListener("click", react);
+    box.addEventListener("keydown", e => { if (e.key === " " || e.key === "Enter") react(); });
+
+    resetBtn.addEventListener("click", () => {
+      times = [];
+      localStorage.removeItem(KEY);
+      renderTimes();
+      state = "idle";
+      box.className = "idle";
+      box.textContent = "Click to start";
+    });
+
+    renderTimes();
+    box.textContent = "Click to start";
+  })();
+  </script>
+</body>
+</html>
