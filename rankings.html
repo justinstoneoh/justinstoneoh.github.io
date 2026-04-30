@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rankings | Justin Stone</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="container">
+    <nav class="nav">
+      <div class="brand">Justin Stone</div>
+      <div class="links">
+        <a href="./index.html">Home</a>
+        <a href="#beer">Beer Rankings</a>
+        <a href="#sports">Best Sport Vote</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <h1>Rankings & Votes</h1>
+      <p>
+        Two interactive widgets: a beer ranking board and a “best sport” vote.
+        Results update instantly and save on your device.
+      </p>
+
+      <div class="hero-actions">
+        <a class="button secondary" href="./resume.pdf" target="_blank" rel="noreferrer">Resume (PDF)</a>
+        <a class="button secondary" href="https://www.bengals.com/" target="_blank" rel="noreferrer">Bengals Website</a>
+      </div>
+    </section>
+  </header>
+
+  <main class="container">
+    <section id="beer" class="card">
+      <h2>Beer Rankings</h2>
+      <p class="micro">Upvote your favorites. The list auto-sorts by score.</p>
+
+      <div class="row between">
+        <div class="micro" id="beerTotalText">Total votes: 0</div>
+        <button class="button secondary small" id="beerResetBtn" type="button">Reset</button>
+      </div>
+
+      <div id="beerList" class="vote-list"></div>
+    </section>
+
+    <section id="sports" class="card">
+      <h2>Vote: Best Sport</h2>
+      <p class="micro">Cast votes and see the ranking change live.</p>
+
+      <div class="row between">
+        <div class="micro" id="sportTotalText">Total votes: 0</div>
+        <button class="button secondary small" id="sportResetBtn" type="button">Reset</button>
+      </div>
+
+      <div id="sportList" class="vote-list"></div>
+    </section>
+
+    <footer class="footer">
+      <span class="micro">Built by Justin • Hosted on GitHub Pages</span>
+    </footer>
+  </main>
+
+  <script src="rankings.js"></script>
+</body>
+</html>
