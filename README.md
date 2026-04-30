@@ -43,7 +43,7 @@ Everything is **100% client-side** (HTML / CSS / Vanilla JS). No framework, no b
 
 ## 🏃 Run Locally
 
-No build step needed. Serve any static file server from the repo root:
+No build step needed. Use any static file server from the repo root:
 
 ```bash
 # Python 3

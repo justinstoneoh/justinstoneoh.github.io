@@ -352,7 +352,7 @@
     let tx0, ty0;
     canvas.addEventListener("touchstart", e => { tx0 = e.touches[0].clientX; ty0 = e.touches[0].clientY; }, {passive:true});
     canvas.addEventListener("touchend", e => {
-      if (tx0 == null) return;
+      if (tx0 === null || tx0 === undefined) return;
       const dx = e.changedTouches[0].clientX - tx0;
       const dy = e.changedTouches[0].clientY - ty0;
       const adx = Math.abs(dx), ady = Math.abs(dy);
