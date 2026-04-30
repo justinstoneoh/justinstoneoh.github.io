@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Justin Stone | Personal Site</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="container">
+    <nav class="nav">
+      <div class="brand">Justin Stone</div>
+      <div class="links">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#tools">Interactive</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <h1>Hi, I’m Justin.</h1>
+      <p>
+        Welcome to my GitHub Pages site. It includes an interactive tool (goal tracker + focus timer)
+        to prove it’s not just static.
+      </p>
+
+      <div class="hero-actions">
+        <a class="button" href="#tools">Try the Interactive Tool</a>
+        <a class="button secondary" href="./Justin%20Stone%20Resume%202026%20(Current).pdf" target="_blank" rel="noreferrer">
+          View Resume (PDF)
+        </a>
+      </div>
+
+      <p class="micro" id="todayLine"></p>
+    </section>
+  </header>
+
+  <main class="container">
+    <section id="about" class="card">
+      <h2>About</h2>
+      <p>
+        I’m building skills by shipping real projects. This site is deployed on GitHub Pages and includes
+        interactive features built with HTML/CSS/JS.
+      </p>
+      <ul class="bullets">
+        <li><strong>Strengths:</strong> learning fast, shipping, iteration</li>
+        <li><strong>Interests:</strong> tech, building useful tools, automation</li>
+        <li><strong>Currently:</strong> improving my portfolio + web skills</li>
+      </ul>
+    </section>
+
+    <section id="projects" class="card">
+      <h2>Projects</h2>
+      <div class="grid">
+        <article class="project">
+          <h3>Interactive Goal Tracker</h3>
+          <p>Add goals, mark done, and track progress. Saved in your browser.</p>
+        </article>
+        <article class="project">
+          <h3>Focus Timer</h3>
+          <p>Simple Pomodoro-style timer with start/pause/reset.</p>
+        </article>
+        <article class="project">
+          <h3>Resume Link</h3>
+          <p>One-click resume access (PDF) from the hero section.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="tools" class="card">
+      <h2>Interactive: Goals + Focus Timer</h2>
+
+      <div class="two-col">
+        <div>
+          <h3>Goal Tracker</h3>
+          <form id="goalForm" class="row">
+            <input id="goalInput" type="text" placeholder="Add a goal (e.g., Apply to 3 internships)" maxlength="80" required />
+            <button class="button" type="submit">Add</button>
+          </form>
+
+          <div class="row between">
+            <div class="micro" id="progressText">0% complete</div>
+            <button class="button secondary small" id="clearGoalsBtn" type="button">Clear</button>
+          </div>
+
+          <ul id="goalList" class="list"></ul>
+        </div>
+
+        <div>
+          <h3>Focus Timer</h3>
+          <div class="timer">
+            <div class="time" id="timeDisplay">25:00</div>
+            <div class="row">
+              <button class="button" id="startPauseBtn" type="button">Start</button>
+              <button class="button secondary" id="resetBtn" type="button">Reset</button>
+            </div>
+            <div class="row">
+              <label class="micro">
+                Minutes:
+                <input id="minutesInput" type="number" min="1" max="180" value="25" />
+              </label>
+            </div>
+            <p class="micro" id="timerHint">Tip: set minutes, press Start, and focus.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="card">
+      <h2>Contact</h2>
+      <p>
+        Easiest way to reach me:
+      </p>
+      <ul class="bullets">
+        <li>GitHub: <a href="https://github.com/justinstoneoh" target="_blank" rel="noreferrer">github.com/justinstoneoh</a></li>
+        <li>Email: <span class="mono" id="emailText">click to reveal</span> <button class="button secondary small" id="revealEmailBtn" type="button">Reveal</button></li>
+      </ul>
+    </section>
+
+    <footer class="footer">
+      <span class="micro">Built by Justin • Hosted on GitHub Pages</span>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
